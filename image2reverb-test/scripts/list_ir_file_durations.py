@@ -5,6 +5,10 @@ import settings
 
 
 def main():
+    """
+    这个是统计数据分布的
+    :return:
+    """
     l = []
     for f in glob.glob(os.path.join(settings.dataset_dir, "*/*.wav")):
         y, fs = soundfile.read(f)

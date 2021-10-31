@@ -10,6 +10,10 @@ from matplotlib import pyplot
 
 
 def main():
+    """
+    这个应该也是绘制数据图片多副图片在一副图上 还有对应的频率图等
+    :return:
+    """
     src_dir = "../datasets/room2reverb/test_A/"
     data_dir = "../datasets/room2reverb/test_B/"
 

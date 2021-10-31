@@ -4,6 +4,13 @@ import itertools
 from shutil import copyfile
 #dataset_outdir = './'
 
+"""
+按照cycleGan的形式准备文件夹 参考：
+https://blog.csdn.net/weixin_36474809/article/details/89004591
+主要就是数据对对应好即可，其他都可以再处理，即一副图片对应一个音频
+"""
+
+
 dataset_outdir =  '/datasets/room2reverb/' #where to save dataset files
 if not os.path.exists(dataset_outdir+'train_img'):
     os.mkdir(dataset_outdir+'train_img')

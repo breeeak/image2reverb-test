@@ -7,6 +7,10 @@ from PIL import Image
 
 
 def main():
+    """
+    这个是将音频的频率图像转化为音频的工具
+    :return:
+    """
     d = sys.argv[1]
     files = (os.path.join(d, f) for f in os.listdir(d) if os.path.splitext(f)[1] in (".png", ".jpg"))
     for f in files:

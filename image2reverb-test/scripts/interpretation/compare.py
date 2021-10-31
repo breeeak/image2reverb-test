@@ -7,6 +7,10 @@ import skimage.metrics
 
 
 def main():
+    """
+    应该是比较两个图片的相似性
+    :return:
+    """
     get_files = lambda d : [os.path.join(d, f) for f in os.listdir(d) if f.endswith(".jpg")]
     f1, f2 = map(get_files, sys.argv[1:3])
 

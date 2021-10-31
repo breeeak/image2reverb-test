@@ -11,6 +11,11 @@ from model.networks import Encoder
 
 
 def main():
+    """
+    这个应该是测试根据图片生成深度信息，同时绘制图像
+    :return:
+    """
+
     args = argparse.ArgumentParser().parse_args()
     args.resize_or_crop = "scale_width_and_crop"
     args.spectrogram = "stft"

@@ -4,6 +4,10 @@ from google_images_download import google_images_download
 
 
 def main():
+    """
+    这个是自动从谷歌图片中下关键词对应图片的工具
+    :return:
+    """
     response = google_images_download.googleimagesdownload()
     for f in sys.argv[1:]:
         arguments = {

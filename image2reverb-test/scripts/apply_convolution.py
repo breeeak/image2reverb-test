@@ -8,6 +8,13 @@ import librosa
 
 
 def main():
+    """
+    这个既是应用卷积 将reverb应用到任意的音频文件中， 输入是
+    要处理的音频
+    示例reverb的名称 这个名称有规律，都是_output.wav结尾
+    示例reverb的路径
+    :return:
+    """
     audio = sys.argv[1]
     example = sys.argv[2]
     data_dir = sys.argv[3]

@@ -6,6 +6,10 @@ import librosa
 
 
 def main():
+    """
+    这个应该是做数据分布统计的
+    :return:
+    """
     data_dir = "../datasets/room2reverb/test_B/"
     u = []
     std = []

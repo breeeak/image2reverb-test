@@ -3,6 +3,10 @@ from analyze_data import print_table
 
 
 def main():
+    """
+    这个是分析数据标签类别，它主要分成了一下几个类别
+    :return:
+    """
     categories_out = sys.argv[1]
     places = ["Large Hall", "Studio", "Medium Hall", "Outdoor", "Small Space", "Home Entryway", "Living Room"]
     for i, place in enumerate(places):

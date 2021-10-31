@@ -9,6 +9,10 @@ import acoustics
 
 
 def main():
+    """
+    比较t60err的一个方式
+    :return:
+    """
     input_dir = sys.argv[1]
     output_dir = sys.argv[2]
     bands = acoustics.standards.iec_61672_1_2013.NOMINAL_OCTAVE_CENTER_FREQUENCIES[2:-4]

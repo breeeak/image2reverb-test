@@ -5,6 +5,10 @@ import librosa
 from PIL import Image
 
 def main():
+    """
+    这个也是将ir的stft频率图保存的
+    :return:
+    """
     export_format = 'png'
     #import_format = 'npy'
     for f in sys.argv[1:]:

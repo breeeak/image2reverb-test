@@ -7,6 +7,10 @@ from PIL import Image
 
 
 def main():
+    """
+    绘制训练数据的分布
+    :return:
+    """
     m = sys.argv[1]
     image_dir = sys.argv[2]
     categories = sys.argv[3]

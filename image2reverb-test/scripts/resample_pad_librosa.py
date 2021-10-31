@@ -4,6 +4,10 @@ import soundfile
 import librosa
 
 def main():
+    """
+    对ir数据进行重采样 22.5kHz
+    :return:
+    """
     fs_new = 22050
     length_new = 5.94 # to make it resulting spectrograms 512x512
     for f in sys.argv[1:]:

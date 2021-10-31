@@ -4,6 +4,10 @@ import soundfile
 
 
 def main():
+    """
+    这个是转化bformat 文件到mono文件 多声道取均值
+    :return:
+    """
     for f in sys.argv[1:]:
         w, fs = soundfile.read(f)
         if len(w.shape) == 1 or w.shape[1] == 1:

@@ -13,6 +13,10 @@ directories = os.listdir(path_data)
 img_height = 256
 img_width = 256
 
+"""
+这是一个图片标准化的工具，使得大小与网络输入一直，但是这里为什么设置成256？文章中是224
+"""
+
 
 # Logs all of the data set into the .csv
 with open('data_log.csv','w',newline = '') as csvfile:

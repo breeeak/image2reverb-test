@@ -10,6 +10,10 @@ from matplotlib import pyplot
 
 
 def main():
+    """
+    这个也是一个可视化的工具
+    :return:
+    """
     src_dir = "../datasets/room2reverb/test_A/"
     data_dir = "../datasets/room2reverb/test_B/"
 
