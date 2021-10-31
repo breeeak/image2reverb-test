@@ -5,25 +5,10 @@ from pytorch_lightning import Trainer, loggers
 from pytorch_lightning.callbacks import ModelCheckpoint
 from image2reverb.model import Image2Reverb
 from image2reverb.dataset import Image2ReverbDataset
+import json
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--n_gpus", type=int, default=1, help="How many GPUs to train with.")
-    parser.add_argument("--checkpoints_dir", type=str, default="./checkpoints_image2reverb", help="Model location.")
-    parser.add_argument("--batch_size", type=int, default=1, help="Batch size.")
-    parser.add_argument("--encoder_path", type=str, default="resnet50_places365.pth.tar", help="Path to pre-trained Encoder ResNet50 model.")
-    parser.add_argument("--depthmodel_path", type=str, default="mono_odom_640x192", help="Path to pre-trained depth (from monodepth2) encoder and decoder models.")
-    parser.add_argument("--dataset", type=str, default="./datasets/image2reverb", help="Dataset path.")
-    parser.add_argument("--niter", type=int, default=100, help="Number of training iters.")
-    parser.add_argument("--from_pretrained", type=str, default=None, help="Path to pretrained model.")
-    parser.add_argument("--spectrogram", type=str, default="stft", help="Spectrogram type.")
-    parser.add_argument("--d_threshold", type=float, default=None, help="Value over which discriminator weights will be updated by optimizer.")
-    parser.add_argument("--version", type=str, default=None, help="Experiment version.")
-    parser.add_argument("--no_depth", action="store_true", help="Don't apply the pre-trained depth model.")
-    parser.add_argument("--no_places", action="store_true", help="Don't load Places365 weights for Encoder.")
-    parser.add_argument("--no_t60p", action="store_true", help="Don't apply the T60-style objective term.")
-    args = parser.parse_args()
+def main(args):
 
     if args.no_places:
         args.encoder_path = None
@@ -63,18 +48,45 @@ def main():
     trainer = Trainer(
         gpus=args.n_gpus if cuda else None,
         auto_select_gpus=True,
-        accelerator="ddp" if cuda else None,
+        accelerator="auto" if cuda else None,
         auto_scale_batch_size="binsearch",
         benchmark=True,
         max_epochs=args.niter,
         resume_from_checkpoint=args.from_pretrained,
         default_root_dir=args.checkpoints_dir,
         callbacks=[checkpoint_callback],
-        logger=logger
+        logger=logger,
+        # num_sanity_val_steps=0
     )
     
     trainer.fit(model, train_dataset, val_dataset)
+    pass
 
 
 if __name__ == "__main__":
-    main()
+    # 保存训练的参数配置
+    parser = argparse.ArgumentParser()
+    if os.path.exists('../train_args.txt'):
+        args = parser.parse_args()
+        with open('../train_args.txt', 'r') as f:
+            args.__dict__ = json.load(f)
+    else:
+        parser.add_argument("--n_gpus", type=int, default=1, help="How many GPUs to train with.")
+        parser.add_argument("--checkpoints_dir", type=str, default="./checkpoints_image2reverb", help="Model location.")
+        parser.add_argument("--batch_size", type=int, default=1, help="Batch size.")
+        parser.add_argument("--encoder_path", type=str, default="resnet50_places365.pth.tar", help="Path to pre-trained Encoder ResNet50 model.")
+        parser.add_argument("--depthmodel_path", type=str, default="mono_odom_640x192", help="Path to pre-trained depth (from monodepth2) encoder and decoder models.")
+        parser.add_argument("--dataset", type=str, default="./datasets/image2reverb", help="Dataset path.")
+        parser.add_argument("--niter", type=int, default=100, help="Number of training iters.")
+        parser.add_argument("--from_pretrained", type=str, default=None, help="Path to pretrained model.")
+        parser.add_argument("--spectrogram", type=str, default="stft", help="Spectrogram type.")
+        parser.add_argument("--d_threshold", type=float, default=None, help="Value over which discriminator weights will be updated by optimizer.")
+        parser.add_argument("--version", type=str, default=None, help="Experiment version.")
+        # action store_true 表示这个值不传参的话默认是FALSE，也就是需要预训练的模型
+        parser.add_argument("--no_depth", action="store_true", help="Don't apply the pre-trained depth model.")
+        parser.add_argument("--no_places", action="store_true", help="Don't load Places365 weights for Encoder.")
+        parser.add_argument("--no_t60p", action="store_true", help="Don't apply the T60-style objective term.")
+        args = parser.parse_args()
+        with open('../train_args.txt', 'w') as f:
+            json.dump(args.__dict__, f, indent=2)
+    main(args)
